@@ -1,7 +1,7 @@
 package com.epam.training.fooddelivery.service;
 
 import com.epam.training.fooddelivery.domain.Customer;
-import com.epam.training.fooddelivery.domain.User;
+import com.epam.training.fooddelivery.exception.AuthenticationException;
 import com.epam.training.fooddelivery.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,8 @@ public class DefaultCustomerService implements CustomerService {
 
     @Override
     @Transactional
-    public Customer authenticate(User user) {
-        return customerRepository.findCustomerByEmailAndPassword(user.getEmail(), user.getPassword())
+    public Customer findCustomerByEmail(String email) {
+        return customerRepository.findCustomerByEmail(email)
                 .orElseThrow(() ->
                         new AuthenticationException("Incorrect email or password"));
     }

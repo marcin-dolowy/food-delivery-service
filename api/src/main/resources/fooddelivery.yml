@@ -1,0 +1,151 @@
+openapi: "3.0.3"
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: Simple food api
+tags:
+  - name: food-controller
+    description: the foodservice API
+  - name: order-controller
+    description: the orderservice API
+paths:
+  /foodservice/foods:
+    get:
+      tags:
+        - food-controller
+      summary: List all foods
+      operationId: listAllFoods
+      description: List all available foods
+      responses:
+        '200':
+          description: All foods
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FoodModel'
+  /orderservice/orders:
+    get:
+      tags:
+        - order-controller
+      summary: List orders of authenticated customer
+      operationId: listAllOrders
+      description: List all orders of authenticated customer
+      responses:
+        '200':
+          description: Customer's orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderModel'
+    post:
+      tags:
+        - order-controller
+      summary: Create order from the cart of body
+      operationId: createOrder
+      description: creates order from cart's body
+      requestBody:
+        description: Cart to place an order
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartModel'
+      responses:
+        '201':
+          description: Created order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderModel'
+        '400':
+          description: The Cart is empty
+  /orderservice/orders/{id}:
+    get:
+      tags:
+        - order-controller
+      summary: Get order of authenticated customer by orderId
+      operationId: getOrderById
+      description: get order with given id
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Order with given ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderModel'
+        '403':
+          description: the order exists but does not belong to the authenticated customer
+        '404':
+          description: the order does not exist
+components:
+  schemas:
+    FoodModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: Fideua
+        calorie:
+          type: integer
+          example: 553
+        category:
+          type: string
+          example: MEAL
+        price:
+          type: integer
+          example: 10
+        description:
+          type: string
+          example: Fideua is a meal
+    OrderItemModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        foodModel:
+          $ref: '#/components/schemas/FoodModel'
+        pieces:
+          type: integer
+        price:
+          type: integer
+    OrderModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        price:
+          type: integer
+          format: int64
+        timestampCreated:
+          type: string
+          format: date
+        orderItemModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemModel'
+    CartModel:
+      type: object
+      properties:
+        price:
+          type: integer
+        orderItemModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemModel'

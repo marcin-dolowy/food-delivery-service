@@ -1,7 +1,9 @@
 package com.epam.training.fooddelivery.service;
 
+import com.epam.training.fooddelivery.domain.Cart;
 import com.epam.training.fooddelivery.domain.Customer;
 import com.epam.training.fooddelivery.domain.Order;
+import com.epam.training.fooddelivery.exception.LowBalanceException;
 import com.epam.training.fooddelivery.repository.CustomerRepository;
 import com.epam.training.fooddelivery.repository.OrderItemRepository;
 import com.epam.training.fooddelivery.repository.OrderRepository;
@@ -22,7 +24,9 @@ public class DefaultOrderService implements OrderService {
 
     @Override
     @Transactional
-    public Order createOrder(Customer customer) {
+    public Order createOrder(Long customerId, Cart cart) {
+        //TUTAJ ZMIANA
+        Customer customer = customerRepository.findById(customerId).orElseThrow(null);
         if (customer.getCart().getOrderItems().isEmpty()) {
             throw new IllegalStateException("Your cart is empty");
         }
@@ -48,14 +52,26 @@ public class DefaultOrderService implements OrderService {
         }
     }
 
+    @Override
+    public List<Order> findAllOrdersByCustomerId(Long id) {
+        return orderRepository.findAllByCustomerId(id);
+    }
+
+    @Override
+    public Order findOrderById(Long id) {
+        return orderRepository.findById(id).orElse(null);
+    }
+
     private void saveCustomer(Customer customer, Order order) {
         List<Order> orders = customer.getOrders();
-        if(orders == null) {
+        if (orders == null) {
             orders = new ArrayList<>();
         }
         orders.add(order);
         customer.setOrders(orders);
     }
+
+
 }
 
 
