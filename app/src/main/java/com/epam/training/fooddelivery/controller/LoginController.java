@@ -1,7 +1,6 @@
 package com.epam.training.fooddelivery.controller;
 
-import com.epam.training.fooddelivery.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,15 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/login")
 public class LoginController {
 
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    public LoginController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+//    @Autowired
+//    private CustomerRepository customerRepository;
 
     @PostMapping
     @ResponseBody
