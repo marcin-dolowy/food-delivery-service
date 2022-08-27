@@ -15,7 +15,8 @@ public class DefaultCustomerService implements CustomerService {
     @Override
     @Transactional
     public Customer findCustomerByEmail(String email) {
-        return customerRepository.findCustomerByEmail(email)
+        return customerRepository
+                .findCustomerByEmail(email)
                 .orElseThrow(() ->
                         new AuthenticationException("Incorrect email or password"));
     }

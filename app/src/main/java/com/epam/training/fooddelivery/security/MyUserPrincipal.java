@@ -1,6 +1,7 @@
 package com.epam.training.fooddelivery.security;
 
 import com.epam.training.fooddelivery.domain.Customer;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,13 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@AllArgsConstructor
 public class MyUserPrincipal implements UserDetails {
 
     private Customer customer;
-
-    public MyUserPrincipal(Customer customer) {
-        this.customer = customer;
-    }
 
     public Customer getCustomer() {
         return customer;
@@ -22,7 +20,7 @@ public class MyUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.customer != null){
+        if (this.customer != null) {
             return List.of(new SimpleGrantedAuthority("USER"));
         } else {
             return List.of();

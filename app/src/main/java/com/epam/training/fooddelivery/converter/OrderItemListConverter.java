@@ -12,12 +12,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class OrderItemListConverter implements Converter<List<OrderItem>,List<OrderItemModel>> {
-
     private final SingleFoodConverter singleFoodConverter;
-
-//    public OrderItemListConverter(SingleFoodConverter singleFoodConverter) {
-//        this.singleFoodConverter = singleFoodConverter;
-//    }
 
     @Override
     public List<OrderItemModel> convert(List<OrderItem> orderItems) {

@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 
 @Component
 public class SingleFoodModelConverter implements Converter<FoodModel, Food> {
+
     @Override
     public Food convert(FoodModel foodModel) {
         Food food = new Food();
