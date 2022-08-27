@@ -11,6 +11,7 @@ import com.epam.training.fooddelivery.model.CartModel;
 import com.epam.training.fooddelivery.model.OrderModel;
 import com.epam.training.fooddelivery.service.CustomerService;
 import com.epam.training.fooddelivery.service.OrderService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,20 +23,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class OrderController implements OrderserviceApi {
     private OrderService orderService;
     private CustomerService customerService;
     private OrderListConverter orderListConverter;
     private SingleOrderModelConverter singleOrderModelConverter;
     private CartModelConverter cartModelConverter;
-
-    public OrderController(OrderService orderService, CustomerService customerService, OrderListConverter orderListConverter, SingleOrderModelConverter singleOrderModelConverter, CartModelConverter cartModelConverter) {
-        this.orderService = orderService;
-        this.customerService = customerService;
-        this.orderListConverter = orderListConverter;
-        this.singleOrderModelConverter = singleOrderModelConverter;
-        this.cartModelConverter = cartModelConverter;
-    }
 
     @Override
     public ResponseEntity<OrderModel> createOrder(@RequestBody CartModel cartModel) {
@@ -79,7 +73,6 @@ public class OrderController implements OrderserviceApi {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String customerEmail = userDetails.getUsername();
-        Long id = customerService.findCustomerByEmail(customerEmail).getId();
-        return id;
+        return customerService.findCustomerByEmail(customerEmail).getId();
     }
 }

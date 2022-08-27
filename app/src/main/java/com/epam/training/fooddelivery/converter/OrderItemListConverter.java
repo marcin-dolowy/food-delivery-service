@@ -2,7 +2,7 @@ package com.epam.training.fooddelivery.converter;
 
 import com.epam.training.fooddelivery.domain.OrderItem;
 import com.epam.training.fooddelivery.model.OrderItemModel;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class OrderItemListConverter implements Converter<List<OrderItem>,List<OrderItemModel>> {
-    private SingleFoodConverter singleFoodConverter;
-    @Autowired
-    public OrderItemListConverter(SingleFoodConverter singleFoodConverter) {
-        this.singleFoodConverter = singleFoodConverter;
-    }
+
+    private final SingleFoodConverter singleFoodConverter;
+
+//    public OrderItemListConverter(SingleFoodConverter singleFoodConverter) {
+//        this.singleFoodConverter = singleFoodConverter;
+//    }
 
     @Override
     public List<OrderItemModel> convert(List<OrderItem> orderItems) {

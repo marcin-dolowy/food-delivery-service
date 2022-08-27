@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CartModelConverter implements Converter<CartModel, Cart> {
 
-    private OrderItemModelListConverter orderItemModelListConverter;
+    private final OrderItemModelListConverter orderItemModelListConverter;
 
     @Override
     public Cart convert(CartModel cartModel) {

@@ -14,9 +14,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/login")
 public class LoginController {
 
-//    @Autowired
-//    private CustomerRepository customerRepository;
-
     @PostMapping
     @ResponseBody
     public String login() {
