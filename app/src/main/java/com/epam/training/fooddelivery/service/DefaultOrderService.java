@@ -27,15 +27,15 @@ public class DefaultOrderService implements OrderService {
     public Order createOrder(Long customerId, Cart cart) {
         //TUTAJ ZMIANA
         Customer customer = customerRepository.findById(customerId).get();
-        if (customer.getCart().getOrderItems().isEmpty()) {
-            throw new IllegalStateException("Your cart is empty");
-        }
-        if (customer.getBalance().compareTo(customer.getCart().getPrice()) >= 0) {
+//        if (customer.getCart().getOrderItems().isEmpty()) {
+//            throw new IllegalStateException("Your cart is empty");
+//        }
+        if (customer.getBalance().compareTo(cart.getPrice()) >= 0) {
 
             Order order = new Order();
             order.setCustomer(customer);
-            order.setPrice(customer.getCart().getPrice());
-            order.setOrderItems(customer.getCart().getOrderItems());
+            order.setPrice(cart.getPrice());
+            order.setOrderItems(cart.getOrderItems());
 
             customer.setBalance(customer.getBalance().subtract(order.getPrice()));
             order.getOrderItems().forEach(orderItem -> orderItem.setOrder(order));
