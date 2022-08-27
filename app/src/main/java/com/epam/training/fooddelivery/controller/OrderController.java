@@ -1,5 +1,6 @@
 package com.epam.training.fooddelivery.controller;
 
+import com.epam.training.fooddelivery.api.OrderserviceApi;
 import com.epam.training.fooddelivery.converter.CartModelConverter;
 import com.epam.training.fooddelivery.converter.OrderListConverter;
 import com.epam.training.fooddelivery.converter.SingleOrderModelConverter;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 @Controller
-public class OrderController {
+public class OrderController implements OrderserviceApi {
     private OrderService orderService;
     private CustomerService customerService;
     private OrderListConverter orderListConverter;

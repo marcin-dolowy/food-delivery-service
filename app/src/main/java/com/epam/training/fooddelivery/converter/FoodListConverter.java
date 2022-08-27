@@ -2,14 +2,14 @@ package com.epam.training.fooddelivery.converter;
 
 import com.epam.training.fooddelivery.domain.Food;
 import com.epam.training.fooddelivery.model.FoodModel;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Converter;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class FoodListConverter implements Converter<List<Food>, List<FoodModel>> {
+public class FoodListConverter implements Converter<List<Food>,List<FoodModel>> {
 
     @Override
     public List<FoodModel> convert(List<Food> foodList) {
