@@ -25,11 +25,7 @@ public class DefaultOrderService implements OrderService {
     @Override
     @Transactional
     public Order createOrder(Long customerId, Cart cart) {
-        //TUTAJ ZMIANA
         Customer customer = customerRepository.findById(customerId).get();
-//        if (customer.getCart().getOrderItems().isEmpty()) {
-//            throw new IllegalStateException("Your cart is empty");
-//        }
         if (customer.getBalance().compareTo(cart.getPrice()) >= 0) {
 
             Order order = new Order();
@@ -40,8 +36,9 @@ public class DefaultOrderService implements OrderService {
             customer.setBalance(customer.getBalance().subtract(order.getPrice()));
             order.getOrderItems().forEach(orderItem -> orderItem.setOrder(order));
             saveCustomer(customer, order);
-            orderItemRepository.saveAll(order.getOrderItems());
+            customer.setCart(cart);
             orderRepository.save(order);
+            orderItemRepository.saveAll(order.getOrderItems());
             customerRepository.save(customer);
 
             return order;
