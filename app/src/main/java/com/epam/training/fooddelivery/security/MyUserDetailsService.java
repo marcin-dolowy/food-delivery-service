@@ -18,9 +18,10 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Customer> customerByEmail = customerRepository.findCustomerByEmail(email);
-        if(customerByEmail.isPresent()){
+        if (customerByEmail.isPresent()) {
             return new MyUserPrincipal(customerByEmail.get());
         } else {
             return null;
         }
+    }
 }
